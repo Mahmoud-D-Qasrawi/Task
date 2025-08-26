@@ -4,32 +4,27 @@ using static Stock;
 
 public class Stock
 {
-    public string Symbol { get; set; }
-    private double _price;
-    public double Price
+    public string Symbol { get; }
+    private decimal _price;
+    public decimal Price
     {
-        get { return this.Price; }  // reading price just returns the field
+        get { return _price; }
         set
         {
-            if (_price != value)   // only act if it’s actually changing
+            if (_price != value)
             {
-                _price = value;    // update the field
+                _price = value;
                 PriceChanged?.Invoke($"{Symbol} Price changed to {_price}");
             }
         }
-
-
     }
-    public Stock(string sympol, double price)
+    public Stock(string symbol, decimal price)
     {
-        Symbol = sympol;
+        Symbol = symbol;
         Price = price;
     }
     public delegate void PriceChangedHandler(string msg);
     public event PriceChangedHandler? PriceChanged;
-
-
-
 }
 class Program
 {
@@ -58,7 +53,7 @@ class Program
         one.PriceChanged += EmailNotifier;
         one.PriceChanged += SMSNotifier;
         one.PriceChanged += Logger;
-        one.Price = 60;
+        one.Price = 60.55m;
     }
 }
 
